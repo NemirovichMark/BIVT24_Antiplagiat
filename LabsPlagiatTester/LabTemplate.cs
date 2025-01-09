@@ -16,6 +16,10 @@ namespace LabsPlagiatTester
         private string _report;
         private int[] _tasks;
         private int _limit;
+        private string[] _baseLines;
+        protected int[] Tasks => _tasks;
+        protected string[] BaseLines => _baseLines;
+
         /// <summary>
         /// Create report about plagiarism between works
         /// </summary>
@@ -23,11 +27,12 @@ namespace LabsPlagiatTester
         /// <param name="reportName"></param>
         /// <param name="tasks"></param>
         /// <param name="limit"></param>
-        public Lab(string folderPath, string reportName, int[] tasks, int limit)
+        public Lab(string folderPath, string reportName, int[] tasks, int limit, string[] baseLines)
         {
             _folderPath = folderPath;
             _tasks = tasks;
             _limit = limit;
+            _baseLines = baseLines;
             FindCopies();
             string reportPath = Path.Combine(Directory.GetParent(_folderPath).FullName, reportName);
             if (File.Exists(reportPath))
@@ -43,22 +48,28 @@ namespace LabsPlagiatTester
         private void FindCopies()
         {
             string[] works = Directory.GetFiles(_folderPath);
+            int rogues = 0;
             for (int i = 0; i < works.Length; i++)
             {
-                for (int j = i+1; j < works.Length; j++)
+                Console.WriteLine(works[i]);
+                for (int j = i + 1; j < works.Length; j++)
                 {
                     var tasks = WorksComparer(works[i], works[j], out int count);
-                    if (count > _limit)
+                    if (count >= _limit)
                     {
                         _copies.TryAdd(works[i], (works[j], count, tasks));
-                    }                       
+                        rogues++;
+                    }
                 }
             }
             StringBuilder sb = new StringBuilder();
+            Console.WriteLine(rogues);
+            sb.AppendLine(rogues.ToString());
             foreach (var copy in _copies)
             {
                 sb.AppendLine(copy.Key.ToString());
                 sb.AppendLine(copy.Value.Item1.ToString());
+                sb.AppendLine(copy.Value.Item2.ToString());
                 Console.WriteLine(copy.Key);
                 Console.WriteLine(copy.Value.Item1);
                 Console.WriteLine(copy.Value.Item2);
@@ -73,7 +84,7 @@ namespace LabsPlagiatTester
             _report = sb.ToString();
         }
 
-        private string[] WorksComparer(string work1, string work2, out int count)
+        protected virtual string[] WorksComparer(string work1, string work2, out int count)
         {
             List<string> matchedTasks = new List<string>(0);
             string text1 = File.ReadAllText(work1);
@@ -85,13 +96,13 @@ namespace LabsPlagiatTester
             int end1 = 1;
             int end2 = 1;
             count = 0;
-            for (int lvl = 1; lvl <= 3; lvl++)
+            for (int lvl = 1; lvl <= _tasks.Length; lvl++)
             {
-                for (int task = 1; task <= _tasks[lvl-1]; task++)
+                for (int task = 1; task <= _tasks[lvl - 1]; task++)
                 {
                     string startPhrase = $" Task_{lvl}_{task}";
                     string endPhrase;
-                    if (task < _tasks[lvl - 1]) endPhrase = $" Task_{lvl}_{task+1}";
+                    if (task < _tasks[lvl - 1]) endPhrase = $" Task_{lvl}_{task + 1}";
                     else endPhrase = $"#endregion";
                     while (start1 < lines1.Length && !lines1[start1].Contains(startPhrase))
                         start1++;
@@ -104,17 +115,17 @@ namespace LabsPlagiatTester
                     while (end2 < lines2.Length && !lines2[end2].Contains(endPhrase))
                         end2++;
                     string[] method = new string[0];
-                    //try
-                    //{
+                    try
+                    {
                         method = GetMatchedLines(lines1, lines2, start1, end1, start2, end2);
-                    //}
-                    //catch (Exception ex)
-                    //{
-                    //    Console.WriteLine(work1);
-                    //    Console.WriteLine(work2);
-                    //    Console.WriteLine(ex.Message);
-                    //    Console.WriteLine(ex.StackTrace);
-                    //}
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(work1);
+                        Console.WriteLine(work2);
+                        Console.WriteLine(ex.Message);
+                        Console.WriteLine(ex.StackTrace);
+                    }
                     if (method.Count() > 0)
                     {
                         count++;
@@ -126,24 +137,25 @@ namespace LabsPlagiatTester
             return matchedTasks.ToArray();
         }
 
-        private string[] GetMatchedLines(string[] text1, string[] text2, int start1, int end1, int start2, int end2)
+        protected virtual string[] GetMatchedLines(string[] text1, string[] text2, int start1, int end1, int start2, int end2)
         {
             List<string> matched = new List<string>(0);
-            string[] baseLines = new string[] { "{", "}", "// code here", "// end", "return", "// There is no test for this task" };
-            for (int i = start1+1; i < end1; i++)
+            int norms = 0;
+            for (int i = start1 + 1; i < end1; i++)
             {
                 bool baseLine = text1[i].Distinct().Count() <= 2;
-                for (int k = 0; !baseLine && k < baseLines.Length; k++)
+                for (int k = 0; !baseLine && k < _baseLines.Length; k++)
                 {
-                    if (text1[i].Contains(baseLines[k]))
+                    if (text1[i].Contains(_baseLines[k]))
                     {
                         baseLine = true;
                     }
                 }
                 if (baseLine) continue;
-                for (int j = start2; j < end2; j++)
+                norms++;
+                for (int j = start2+1; j < end2; j++)
                 {
-                    if (text2[j].Distinct().Count() <= 2) 
+                    if (text2[j].Distinct().Count() <= 2)
                         continue;
                     if (text1[i] == text2[j])
                     {
@@ -153,10 +165,8 @@ namespace LabsPlagiatTester
                 }
             }
             int counter = matched.Distinct().Count();
-            if (counter > 1 && (double)counter/(end1-start1) > 0.2)
+            if (counter > 3 && (double)counter / norms >= 0.8)
             {
-                //foreach (string line in matched)
-                //Console.WriteLine($"Plagiat at the task:{line}");
             }
             else
                 matched.Clear();

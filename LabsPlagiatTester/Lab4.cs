@@ -5,6 +5,7 @@ namespace LabsPlagiatTester
     public class Lab4 : Lab
     {
         public Lab4(string folderPath, string reportName) : 
-            base(folderPath, reportName, new int[] { 33, 9, 11 }, 5) { }
+            base(folderPath, reportName, new int[] { 33, 9, 11 }, 4,
+                new string[] { "{", "}", "// code here", "// end", "return" }) { }
     }
 }
