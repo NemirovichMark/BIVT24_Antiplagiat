@@ -1,896 +1,1234 @@
-﻿using Microsoft.VisualBasic;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.Metrics;
-using System.Linq.Expressions;
-using System.Numerics;
+using System.Drawing;
 using System.Runtime.InteropServices;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Xml.Linq;
+using System;
+
 
 public class Program
 {
     public static void Main()
     {
         Program program = new Program();
-        // program.Task_1_1(new int[] {1, 2, 3, 4, 5, 6});
-        // program.Task_2_6(new double[] { 0, 1.5, -1, -3, -2.2, -0.5, 6 }, 2.3);
-        // program.Task_2_8(new double[] { 5, 2, 8, 1, 9, 3, 7, 4, 6, 2 });
-        // program.Task_3_5(new double[] { 0, 1.5, 1, 3, -2.2, -0.5, 3 });
-        int[] A = new int[] {1, 2, 3, 4, 5};
-        int shift = 3;
-        int n=A.Length;
-        for (int i=0;i<shift%n;i++)
-        {
-            int temp=A[n-1];
-            for (int j=n-1;j>0;j--)
-            {
-                A[j]=A[j-1];
-            }
-            A[0]=temp;
-        }
-        foreach (double k in A)
-        {
-            System.Console.WriteLine(k);
-        }
+    // program.Task_1_11(new int[,] {
+    //             { 1, 2, 3, 4, -5, -6, -7 },
+    //             { 5, 11, -17, 11, -10, 6, 5 },
+    //             { -9, -10, -11, -14, -15, -16, 1 },
+    //             { -9, -10, -11, -14, -15, -6, -2 },
+    //             { -9, -10, -11, -14, -15, 6, 4 }
+    //         });
+        program.Task_2_1(new double[,] {
+                { 1, 2, -3, 7, -5, 7, 7 },
+                { 5, 6, -7, 8, 9, 9, -11 },
+                { 9, 10, 11, 12, 13, 15, 15 },
+                { -13, -30, 25, 25, 16, 17, -19 },
+                { -6, -5, -1, -2, -3, -4, -6 }
+            });
     }
     #region Level 1
-    public double[] Task_1_1(double[] array)
+    public int Task_1_1(int[,] A)
     {
-        double summa=0;
-        for(int i=0;i<=5;i++)
-        {
-            summa+=array[i];
-        }
-        for(int i=0;i<=5;i++)
-        {
-            array[i]=Math.Round(array[i]/summa,2);
-        }
+        int answer = 0;
+        // code here
 
-        return array;
+        // end
+
+        return answer;
     }
-    public double[] Task_1_2(double[] array)
+    public double Task_1_2(int[,] A)
     {
-        double summa=0;
-        double count=0;
-        for(int i=0;i<=7;i++)
-        {
-            if (array[i]>0)
-            {
-                summa+=array[i];
-                count++;
-            }
-        }
-        for(int i=0;i<=7;i++)
-        {
-            if (array[i]>0)
-            {
-                array[i]=Math.Round(summa/count,2);
-            }
+        double answer = 0;
+
+        double sum = 0, count = 0; 
+        int rows = A.GetLength(0);
+        int cols = A.GetLength(1);
+
+        for (int i = 0; i < rows; i++) 
+        { 
+            for (int j = 0; j < cols; j++) 
+            { 
+                if (A[i, j] > 0) 
+                { 
+                    count++; 
+                    sum += A[i, j]; 
+                } 
+            } 
         }
 
-        return array;
+        answer = (count > 0) ? (sum / count) : 0;
+
+        return answer;
     }
-    public (double[], double[]) Task_1_3(double[] first, double[] second)
+    public int Task_1_3(int[,] A)
     {
-        double[] sum = new double[first.Length], dif = new double[first.Length];
-        for(int i=0;i<=3;i++)
-        {
-            sum[i]=Math.Round(first[i]+second[i],2);
-            dif[i]=Math.Round(first[i]-second[i],2);
-        }
+        int answer = 0;
+        // code here
 
-        return (sum, dif);
+        // end
+
+        return answer;
     }
-    public double[] Task_1_4(double[] array)
+    public (int, int) Task_1_4(int[,] A)
     {
+        int row = 0, col = 0;
+        // code here
 
-        double summa=0;
-        for(int i=0;i<=4;i++)
-        {
-            summa+=array[i];
-        }
-        for(int i=0;i<=4;i++)
-        {
-            array[i]=Math.Round(array[i]-summa/5,2);
-        }
+        // end
 
-        return array;
+        return (row, col);
     }
-    public double Task_1_5(double[] vector1, double[] vector2)
+    public (int, int) Task_1_5(int[,] A, int colIndex)
     {
-        double product = 0;
+        int value = 0, rowIndex = -1;
+        int count=0;
 
-        for(int i=0;i<=3;i++)
-        {
-            product+=vector1[i]*vector2[i];
-        }
+        int rows = A.GetLength(0);
+        int cols = A.GetLength(1);
 
-        return Math.Round(product,2);
-    }
-    public double Task_1_6(double[] vector)
-    {
-        double length = 0;
-
-        for(int i=0;i<=4;i++)
-        {
-            length+=vector[i]*vector[i];
-        }
-
-        return Math.Round(Math.Sqrt(length), 2); ;
-    }
-    public double[] Task_1_7(double[] array)
-    {
-        double summa=0;
-        for(int i=0;i<=6;i++)
-        {
-            summa+=array[i];
-        }
-        for(int i=0;i<=6;i++)
-        {
-            if(array[i]>summa/7)
-            {
-                array[i]=0;
-            }
-        }
-
-        return array;
-    }
-    public int Task_1_8(double[] array)
-    {
-        int count = 0;
-
-        for(int i=0;i<=5;i++)
-        {
-            if(array[i]<0)
+        for (int i = 0; i < rows; i++) 
+        { 
+            for (int j = 0; j < cols; j++) 
             {
                 count++;
-            }
+                if (A[i, j] < 0) 
+                { 
+                    value=A[i,j];
+                    rowIndex = i; 
+                } 
+            } 
         }
 
-        return count;
+        rowIndex = (value < 0) ? (rowIndex) : 0;
+
+        return (value, rowIndex);
     }
-    public int Task_1_9(double[] array)
+    public int[] Task_1_6(int[,] A)
     {
-        int count = 0;
+        int[] answer = default(int[]);
+        // code here
 
-        double summa=0;
-        for(int i=0;i<=7;i++)
+        // end
+
+        return answer;
+    }
+    public int[] Task_1_7(int[,] A)
+    {
+        int[] answer = default(int[]);
+        // code here
+
+        // end
+
+        return answer;
+    }
+    public double[] Task_1_8(int[,] A)
+    {
+        double[] answer = default(double[]);
+        answer = new double[A.GetLength(0)];
+
+        if (A.GetLength(0) != 4 || A.GetLength(1) != 6) 
+        return null;
+
+        int rows = A.GetLength(0);
+        int cols = A.GetLength(1);
+        double count,sum;
+        for (int i = 0; i < rows; i++) 
         {
-            summa+=array[i];
-        }
-        for(int i=0;i<=7;i++)
-        {
-            if(array[i]>summa/8)
+            count=0;sum=0;
+            for (int j = 0; j < cols; j++) 
             {
-                count++;
+                if (A[i, j] > 0) 
+                {
+                    count++;
+                    sum+=A[i,j];
+                } 
             }
+            answer[i] = (count > 0) ? (sum/count) : 0;
         }
 
-        return count;
-    }
-    public int Task_1_10(double[] array, int P, int Q)
-    {
-        int count = 0;
 
-        for(int i=0;i<=9;i++)
+        return answer;
+    }
+    public int[,] Task_1_9(int[,] A)
+    {
+        // code here
+
+        // end
+
+        return A;
+    }
+    public int[,] Task_1_10(int[,] A)
+    {
+        // code here
+
+        // end
+
+        return A;
+    }
+    public int[,] Task_1_11(int[,] A)
+    {
+        int rows = A.GetLength(0);
+        int cols = A.GetLength(1);
+
+        if (rows != 5 || cols != 7) 
+        return null;
+
+        int[,] answer = new int[rows-1,cols];
+
+        double amin=double.MaxValue;
+        int amin_rows=0;
+
+        for (int i = 0; i < rows; i++) 
         {
-            if(array[i]>P && array[i]<Q)
+            if(A[i,0]<amin)
             {
-                count++;
+                amin=A[i,0];
+                amin_rows=i;
             }
         }
 
-        return count;
-    }
-    public double[] Task_1_11(double[] array)
-    {
-        double[] output = null;
-        int j=0;
-
-        for(int i=0;i<=9;i++)
-        {
-            if(array[i]>0) j++;
-        }
-        output = new double[j];
         int k=0;
-        foreach (double a in array)
+
+        for (int i = 0; i < rows; i++) 
         {
-            if (a>0)
+            if (i==amin_rows)
             {
-                output[k]=a;
-                k++;
+                continue;
+            }
+            for (int j = 0; j < cols; j++) 
+            {
+                answer[k,j]=A[i,j];
+            }
+            k++;
+        }
+        return answer;
+    }
+    public int[,] Task_1_12(int[,] A)
+    {
+        // code here
+
+        // end
+
+        return A;
+    }
+    public int[,] Task_1_13(int[,] A)
+    {
+        // code here
+
+        // end
+
+        return A;
+    }
+    public int[] Task_1_14(int[,] A)
+    {
+        int[] answer = default(int[]);
+
+
+        int rows = A.GetLength(0);
+        int cols = A.GetLength(1);
+
+        if (rows != 4 || cols != 3) 
+        return null;
+
+        answer = new int[cols];
+
+        int count;
+
+        for (int j = 0; j < cols; j++) 
+        {
+            count=0;
+            for (int i = 0; i < rows; i++) 
+            {
+                if (A[i,j]<0)
+                count++;
+            }
+            answer[j]=count;
+        }
+
+        return answer;
+    }
+    public int[,] Task_1_15(int[,] A)
+    {
+        // code here
+
+        // end
+
+        return A;
+    }
+    public int[,] Task_1_16(int[,] A, int n, int m)
+    {
+        // code here
+
+        // end
+
+        return A;
+    }
+    public int[,] Task_1_17(int[,] B, int n, int m)
+    {
+        int rows = B.GetLength(0);
+        int cols = B.GetLength(1);
+
+        if (rows != n || cols != m) 
+        return null;
+
+        for (int i = 0; i < rows; i++) 
+        {
+            int a_min=int.MaxValue;
+            int a_min_index=0;
+            for (int j = 0; j < cols; j++) 
+            {
+                if (B[i,j]<a_min)
+                {
+                    a_min=B[i,j];
+                    a_min_index=j;
+                }
+            }
+            for (int k=a_min_index;k>0;k--)
+            {
+                int temp=B[i,k-1];
+                B[i,k-1]=B[i,k];
+                B[i,k]=temp;
             }
         }
 
-
-        return output;
+        return B;
     }
-    public (double, int) Task_1_12(double[] array)
+    public int[,] Task_1_18(int[,] D, int n, int m)
     {
-        double value = 0;
-        int index = -1;
-        int count=0;
+        // code here
 
-        foreach (double a in array)
+        // end
+
+        return D;
+    }
+    public double[,] Task_1_19(double[,] C, int n, int m)
+    {
+        // code here
+
+        // end
+
+        return C;
+    }
+    public double[,] Task_1_20(double[,] F, int n, int m)
+    {
+        int rows = F.GetLength(0);
+        int cols = F.GetLength(1);
+
+        if (rows != n || cols != m) 
+        return null;
+
+        for (int i = 0; i < rows; i++) 
         {
-            if (a<0)
+            double first_negative=1;
+            double last_negative=1;
+            int counter=0;
+            double a_max=double.MinValue;
+            int a_max_index=0;
+            for (int j = 0; j < cols; j++) 
             {
-                value=a;
-                index=count;
+                if(a_max<F[i,j])
+                {
+                    a_max=F[i,j];
+                    a_max_index=j;
+                }
+                if(F[i,j]<0)
+                {
+                    if(counter==0)
+                    first_negative=F[i,j];
+                    counter++;
+                    last_negative=F[i,j];
+                }
             }
-            count++;
+            if (counter>0)
+            F[i,a_max_index]=(first_negative+last_negative)/2;
         }
 
-        return (value, index);
+        return F;
     }
-    public (double[], double[]) Task_1_13(double[] array)
+    public int[,] Task_1_21(int[,] H)
     {
-        double[] even = new double[array.Length / 2];
-        double[] odd = new double[array.Length/2];
+        // code here
 
-        for(int i=0;i<5;i++)
-        {
-            even[i]=array[2*i];
-            odd[i]=array[2*i+1];
-        }
+        // end
 
-        return (even, odd);
+        return H;
     }
-    public double Task_1_14(double[] array)
+    public double[,] Task_1_22(double[,] Z)
     {
-        double sum = 0;
+        // code here
 
-        foreach (double a in array)
-        {
-            if (a<0) break;
-            sum+=a*a;
-        }
+        // end
 
-        return sum;
+        return Z;
     }
-    public double[] Task_1_15(double[] x)
+    public int[,] Task_1_23(int[,] G)
     {
-        double[] y = new double[x.Length];
-        int count=0;
+        int rows = G.GetLength(0);
+        int cols = G.GetLength(1);
 
-        foreach (double a in x)
+        if (rows != 5 || cols != 7) 
+        return null;
+
+        for (int i = 0; i < rows; i++) 
         {
-            y[count]=double.NaN;
-            if (a>0)
-            y[count]=Math.Round(0.5 * Math.Log(a), 2);
-            count++;
+            int a_max=int.MinValue;
+            int a_max_index=-1;
+            for (int j = 0; j < cols; j++) 
+            {
+                if(a_max<G[i,j])
+                {
+                    a_max=G[i,j];
+                    a_max_index=j;
+                }
+            }
+            for(int k=cols-1;k>a_max_index+1;k--)
+            {
+                G[i,k]=G[i,k-1];
+            }
+
+            G[i,a_max_index+1]=a_max;
         }
 
-        return y;
+        return G;
+    }
+    public double[,] Task_1_24(double[,] Y)
+    {
+        // code here
+
+        // end
+
+        return Y;
+    }
+    public int[,] Task_1_25(int[,] X)
+    {
+        // code here
+
+        // end
+
+        return X;
+    }
+    public int[,] Task_1_26(int[,] A, int[] B)
+    {
+        int rows = A.GetLength(0);
+        int cols = A.GetLength(1);
+
+        if (rows != 5 || cols != 7) 
+        return null;
+
+        if (B.Length != 7)
+        return null;
+
+        int a_max=int.MinValue;
+        int a_max_index=-1;
+
+        for(int k=0;k<rows;k++)
+        {
+            if (a_max<A[k,5])
+            {
+                a_max=A[k,5];
+                a_max_index=k;
+            }
+        }
+
+        for(int l=0;l<cols;l++)
+        {
+            A[a_max_index,l]=B[l];
+        }
+
+        return A;
+    }
+    public int[,] Task_1_27(int[,] B)
+    {
+        // code here
+
+        // end
+
+        return B;
+    }
+    public int[,] Task_1_28(int[,] A)
+    {
+        // code here
+
+        // end
+
+        return A;
+    }
+    public int[,] Task_1_29(int[,] F)
+    {
+        int rows = F.GetLength(0);
+        int cols = F.GetLength(1);
+
+        if (rows != 5 || cols != 7) 
+        return null;
+
+        int[,]A=new int[5,6];
+
+        double a_min=double.MaxValue;
+        int a_min_index=-1;
+        for (int j = 0; j < cols; j++) 
+        {
+            if(a_min>Math.Abs(F[1,j]))
+            {
+                a_min=F[1,j];
+                a_min_index=j;
+            }
+        }
+        a_min_index++;
+
+        for (int i = 0; i < rows; i++) 
+        {
+            for (int k=0;k<a_min_index;k++)
+            {
+                A[i,k]=F[i,k];
+            }
+            for (int k=a_min_index+1;k<cols;k++)
+            {
+                A[i,k-1]=F[i,k];
+            }
+        }
+
+        for (int i = 0; i < A.GetLength(0); i++)
+        {
+            for (int j = 0; j < A.GetLength(1); j++)
+            {
+                Console.Write($"{A[i, j]} ");
+            }
+            Console.WriteLine();
+        }
+        System.Console.WriteLine(a_min_index);
+
+
+
+        return A;
+    }
+    public int[,] Task_1_30(int[,] B)
+    {
+        // code here
+
+        // end
+
+        return B;
+    }
+    public int[,] Task_1_31(int[,] A, int[] B)
+    {
+        // code here
+
+        // end
+
+        return A;
+    }
+    public double[,] Task_1_32(double[,] A)
+    {
+        int rows = A.GetLength(0);
+        int cols = A.GetLength(1);
+
+        if (rows != 5 || cols != 7) 
+        return null;
+
+        for (int i = 0; i < rows; i++) 
+        {
+            double a_max=int.MinValue;
+            int a_max_index=-1;
+            double sum=0;
+            double counter=0;
+            for (int j = 0; j < cols; j++) 
+            {
+                if(a_max<A[i,j])
+                {
+                    a_max=A[i,j];
+                    a_max_index=j;
+                }
+                if (A[i,j]>0)
+                {
+                    sum+=A[i,j];
+                    counter++;
+                }
+            }
+            A[i,a_max_index] = (counter > 0) ? (sum / counter) : 0;
+
+        }
+
+        return A;
+    }
+    public int[] Task_1_33(int[,] A)
+    {
+        int[] answer = default(int[]);
+        // code here
+
+        // end
+
+        return answer;
     }
     #endregion
 
     #region Level 2
-    public double[] Task_2_1(double[] array)
+    public double[,] Task_2_1(double[,] A)
     {
-        // code here
+        int rows = A.GetLength(0);
+        int cols = A.GetLength(1);
 
-        // end
+        if (rows != 5 || cols != 7) 
+        return null;
 
-        return array;
-    }
-    public double Task_2_2(double[] array)
-    {
-        double sum = 0;
-        double mina=double.NegativeInfinity;
-
-        foreach (double a in array)
-        {
-            if(a>mina)
-            mina=a;
-        }
-        foreach (double a in array)
-        {
-            if(a==mina) break;
-            sum+=a;
-        }
-
-        return sum;
-    }
-    public double[] Task_2_3(double[] array)
-    {
-        // code here
-
-        // end
-
-        return array;
-    }
-    public double[] Task_2_4(double[] array)
-    {
-        double mina=double.NegativeInfinity;
-        double sum=0;
-        foreach (double a in array)
-        {
-            if(a>mina)
-            mina=a;
-            sum+=a;
-        }
-        bool flag=false;
-        int count=0;
-        foreach (double a in array)
-        {
-        if (flag==true) array[count]=Math.Round(sum/array.Length,2);
-            if(a==mina) flag=true;
-            count++;
-        }
-
-        return array;
-    }
-    public double[] Task_2_5(double[] array)
-    {
-        // code here
-
-        // end
-
-        return array;
-    }
-    public double[] Task_2_6(double[] array, double P)
-    {
-        double[] array_p = new double[array.Length+1];
-        double sum=0;
-
-        foreach (double a in array)
-        {
-            sum+=a;
-        }
-        double sred=sum/array.Length;
-        int count=0;
-        int pos=0;
-        double min_pos=double.PositiveInfinity;;
-        for (int i=0;i<array.Length;i++)
-        {
-            if (Math.Abs(array[i]-sred)<min_pos)
+        for (int i = 0; i < rows; i++) 
+        { 
+            double a_max=int.MinValue;
+            int a_max_index=-1;
+            for (int j = 0; j < cols; j++) 
             {
-                min_pos=Math.Abs(array[i]-sred);
-                pos=i;
-            }
-        }
-        int j=0;
-        for (int i=0;i<array.Length;i++)
-        {
-            if (pos+1==i)
-            {
-                array_p[j]=P;
-                j++;
-            }
-            array_p[j]=array[i];
-            j++;
-        }
-
-        return array_p;
-    }
-    public double[] Task_2_7(double[] array)
-    {
-        // code here
-
-        // end
-
-        return array;
-    }
-    public double[] Task_2_8(double[] array)
-    {
-        double mina=double.PositiveInfinity;
-        double maxa=double.NegativeInfinity;
-        int maxa_index=-1;
-        int mina_index=-1;
-        for(int i = 0;i<array.Length;i++)
-        {
-            if(array[i]>=maxa)
-            {
-                maxa=array[i];
-                maxa_index=i;
-            }
-        }
-        for(int i = 0;i<array.Length;i++)
-        {
-            if(i>=maxa_index)
-            {
-                if(array[i]<mina)
+                if(a_max<A[i,j])
                 {
-                    mina=array[i];
-                    mina_index=i;
+                    a_max=A[i,j];
+                    a_max_index=j;
+                }
+            } 
+            if(a_max_index==0)
+            A[i,a_max_index+1]*=2;
+            else if(a_max_index==cols-1)
+            A[i,a_max_index-1]*=2;
+            else
+            {
+                if(A[i,a_max_index-1]<A[i,a_max_index+1])
+                {
+                    if(A[i,a_max_index-1]>0)
+                    A[i,a_max_index-1]*=2;
+                    else
+                    A[i,a_max_index-1]*=0.5;
+                }
+                else
+                {
+                    if(A[i,a_max_index+1]>0)
+                    A[i,a_max_index+1]*=2;
+                    else
+                    A[i,a_max_index+1]*=0.5;
                 }
             }
         }
-        (array[maxa_index],array[mina_index])=(mina,maxa);
 
-        return array;
-    }
-    public double Task_2_9(double[] array)
-    {
-        double average = 0;
 
-        // code here
-
-        // end
-
-        return average;
-    }
-    public double[] Task_2_10(double[] array)
-    {
-        double[] array_new = new double[array.Length-1];
-        double mina=double.PositiveInfinity;
-        int mina_index=-1;
-        for(int i = 0;i<array.Length;i++)
+        for (int i = 0; i < rows; i++)
         {
-            if(array[i]<mina && array[i]>0)
+            for (int j = 0; j < cols; j++)
             {
-                mina=array[i];
-                mina_index=i;
+                Console.Write(A[i, j] + "\t");
             }
-        }
-        if (mina_index==array.Length || mina_index==-1) return array;
-        for(int i=0;i<array_new.Length;i++)
-        {
-            if(i<mina_index)
-                array_new[i]=array[i];
-            else
-                array_new[i]=array[i+1];
+            Console.WriteLine();
         }
 
-        return array_new;
-    }
-    public double[] Task_2_11(double[] array, double P)
-    {
-        // code here
 
-        // end
-
-        return array;
-    }
-    public double[] Task_2_12(double[] array)
-    {
-        double maxa=double.NegativeInfinity;
-        int maxa_index=-1;
-        for(int i = 0;i<array.Length;i++)
-        {
-            if(array[i]>=maxa)
-            {
-                maxa=array[i];
-                maxa_index=i;
-            }
-        }
-        double sum=0;
-        for(int k=maxa_index+1;k<array.Length;k++)
-        {
-            sum+=array[k];
-        }
-
-        for(int i = 0;i<array.Length;i++)
-        {
-            if(array[i]<0)
-            {
-                array[i]=sum;
-                break;
-            }
-        }
-        return array;
-    }
-    public double[] Task_2_13(double[] array)
-    {
-        // code here
-
-        // end
-
-        return array;
-    }
-    public double[] Task_2_14(double[] array)
-    {
-        double maxa=double.NegativeInfinity;
-        int maxa_index=-1;
-        for(int i = 0;i<array.Length;i++)
-        {
-            if(array[i]>=maxa)
-            {
-                maxa=array[i];
-                maxa_index=i;
-            }
-        }
-
-        for(int i = 0;i<array.Length;i++)
-        {
-            if(array[i]<0)
-            {
-                double k =array[i];
-                (array[i],array[maxa_index])=(maxa,k);
-                break;
-            }
-        }
-
-        return array;
-    }
-    public double[] Task_2_15(double[] A, double[] B, int k)
-    {
-        double[] output = null;
-
-        // code here
-
-        // end
-
-        return output;
-    }
-    public int[] Task_2_16(double[] array)
-    {
-        double sum=0;
-
-        foreach (double a in array)
-        {
-            sum+=a;
-        }
-        int count = 0;
-        for(int i = 0;i<array.Length;i++)
-        {
-            if (array[i]<sum/array.Length)
-            count++;
-        }
-        int[] output = new int[count];
-        int j=0;
-
-        for(int i = 0;i<array.Length;i++)
-        {
-            if (array[i]<sum/array.Length)
-            {
-                output[j]=i;
-                j++;
-            }
-        }
-        return output;
-    }
-    public double Task_2_17(double[] array)
-    {
-        double average = 0;
-
-        // code here
-
-        // end
-
-        return average;
-    }
-    public double[] Task_2_18(double[] array)
-    {
-        double maxa_1=double.NegativeInfinity;
-        double maxa_2=double.NegativeInfinity;
-        for(int i = 0;i<array.Length;i++)
-        {
-            if(array[i]>=maxa_1 && i%2==0)
-            {
-                maxa_1=array[i];
-            }
-            if(array[i]>=maxa_2 && i%2!=0)
-            {
-                maxa_2=array[i];
-            }
-        }
-        if(maxa_1>maxa_2)
-        {
-            for(int i=0;i<array.Length/2;i++)
-            {
-                array[i]=0;
-            }
-        }
-        else
-        {
-            for(int i=array.Length/2;i<array.Length;i++)
-            {
-                array[i]=0;
-            }
-        }
-
-        return array;
-    }
-    public double[] Task_2_19(double[] array)
-    {
-        // code here
-
-        // end
-
-        return array;
-    }
-    public double Task_2_20(double[] array)
-    {
-        double sum = 0;
-
-        double mina=double.PositiveInfinity;
-        int mina_index=-1;
-        double first_negative=double.PositiveInfinity;
-        int first_negative_index=int.MaxValue;
-        int F=1;
-        for(int i = 0;i<array.Length;i++)
-        {
-            if(array[i]<mina)
-            {
-                mina=array[i];
-                mina_index=i;
-            }
-            if(array[i]<0 && F==1)
-            {
-                first_negative=array[i];
-                first_negative_index=i;
-                F=0;
-            }
-        }
-        if(first_negative_index<mina_index)
-        {
-            for(int i=0;i<array.Length;i+=2)
-            {
-                sum+=array[i];
-            }
-        }
-        else
-        {
-            for(int i=1;i<array.Length;i+=2)
-            {
-                sum+=array[i];
-            }
-        }
-
-        return sum;
+        return A;
     }
     #endregion
+    public int[,] Task_2_2(int[,] A)
+    {
+        int rows = A.GetLength(0);
+        int cols = A.GetLength(1);
+
+        if (rows != 7 || cols != 5) 
+        return null;
+
+
+        for (int j = 0; j < cols; j++) 
+        { 
+            double a_max=int.MinValue;
+            int a_max_index=-1;
+            int count_negatives=0;
+            int count_positive=0;
+            for (int i = 0; i < rows; i++) 
+            {
+                if(A[i,j]>0)
+                count_positive++;
+                else if(A[i,j]<0)
+                count_negatives++;
+                if(a_max<A[i,j])
+                {
+                    a_max=A[i,j];
+                    a_max_index=i;
+                }
+            }
+            if(count_positive>count_negatives)
+            A[a_max_index,j]=0;
+            else
+            A[a_max_index,j]=a_max_index+1;
+        }
+
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                Console.Write(A[i, j] + "\t");
+            }
+            Console.WriteLine();
+        }
+
+        return A;
+    }
+    public int[,] Task_2_3(int[,] A)
+    {
+        int rows = A.GetLength(0);
+        int cols = A.GetLength(1);
+
+        if (rows != 10 || cols != 5) 
+        return null;
+
+
+        for (int j = 0; j < cols; j++) 
+        { 
+            double a_max=int.MinValue;
+            int a_max_index=-1;
+            int summa=0;
+            for (int i = 0; i < rows; i++) 
+            {
+                if(a_max<A[i,j])
+                {
+                    a_max=A[i,j];
+                    a_max_index=i;
+                }
+            }
+            for (int i = 0; i < rows; i++) 
+            {
+                if(a_max_index<i)
+                {
+                    summa+=A[i,j];
+                }
+            }
+            if(a_max_index<=rows/2)
+            {
+                A[0,j]=summa;
+            }
+        }
+
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                Console.Write(A[i, j] + "\t");
+            }
+            Console.WriteLine();
+        }
+
+        return A;
+    }
+    public int[,] Task_2_4(int[,] A, int[] B)
+    {
+        int rows = A.GetLength(0);
+        int cols = A.GetLength(1);
+
+        if (rows != 7 || cols != 5 || B.Length!=5) 
+        return null;
+
+
+        for (int j = 0; j < cols; j++) 
+        { 
+            double a_max=int.MinValue;
+            int a_max_index=-1;
+            for (int i = 0; i < rows; i++) 
+            {
+                if(a_max<A[i,j])
+                {
+                    a_max=A[i,j];
+                    a_max_index=i;
+                }
+            }
+            if(a_max<B[j])
+            {
+                A[a_max_index,j]=B[j];
+            }
+        }
+
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                Console.Write(A[i, j] + "\t");
+            }
+            Console.WriteLine();
+        }
+
+        return A;
+    }
+    public double[,] Task_2_5(double[,] A)
+    {
+        int rows = A.GetLength(0);
+        int cols = A.GetLength(1);
+
+        if (rows != 7 || cols != 5) 
+        return null;
+
+
+        for (int j = 0; j < cols; j++) 
+        { 
+            double a_max=int.MinValue;
+            int a_max_index=-1;
+            for (int i = 0; i < rows; i++) 
+            {
+                if(a_max<A[i,j])
+                {
+                    a_max=A[i,j];
+                    a_max_index=i;
+                }
+            }
+            if(a_max<(A[0,j]+A[rows-1,j])/2)
+            A[a_max_index,j]=(A[0,j]+A[rows-1,j])/2;
+            else
+            A[a_max_index,j]=a_max_index+1;
+        }
+
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                Console.Write(A[i, j] + "\t");
+            }
+            Console.WriteLine();
+        }
+
+        return A;
+    }
+    public int[,] Task_2_6(int n)
+    {
+        int[,] answer = default(int[,]);
+        if (n <= 0) return answer;
+        answer = new int[n,3*n];
+        for(int i=0;i<n;i++)
+        {
+            for (int j=0; j<n;j++)
+            {
+            answer[i,j]= (i==j) ? (1) : 0;
+            answer[i,j+n]= (i==j) ? (1) : 0;
+            answer[i,j+n+n]= (i==j) ? (1) : 0;
+            }
+        }
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < 3*n; j++)
+            {
+                Console.Write(answer[i, j] + "\t");
+            }
+            Console.WriteLine();
+        }
+        return answer;
+    }
+    public int[,] Task_2_7(int[,] A)
+    {
+        int rows = A.GetLength(0);
+        int cols = A.GetLength(1);
+
+        if (rows != 6 || cols != 6) 
+        return null;
+
+        double a_max=int.MinValue;
+        int a_max_index=-1;
+        for (int i = 0; i < rows; i++) 
+        {
+            if(a_max<A[i,i])
+            {
+                a_max=A[i,i];
+                a_max_index=i;
+            }
+        }
+
+        for(int i=0;i<a_max_index;i++)
+        {
+            for (int j=i+1; j<rows;j++)
+            {
+            A[i,j]= 0;
+            }
+        }
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                Console.Write(A[i, j] + "\t");
+            }
+            Console.WriteLine();
+        }
+
+        return A;
+    }
+    public int[,] Task_2_8(int[,] B)
+    {
+        int rows = B.GetLength(0);
+        int cols = B.GetLength(1);
+
+        if (rows != 6 || cols != 6) 
+        return null;
+
+
+        for (int i = 0; i < cols; i+=2) 
+        { 
+            double a_max_1=int.MinValue;
+            int a_max_index_1=-1;
+            for (int j = 0; j < rows; j++) 
+            {
+                if(a_max_1<B[i,j])
+                {
+                    a_max_1=B[i,j];
+                    a_max_index_1=j;
+                }
+            }
+            double a_max_2=int.MinValue;
+            int a_max_index_2=-1;
+            for (int j = 0; j < rows; j++) 
+            {
+                if(a_max_2<B[i+1,j])
+                {
+                    a_max_2=B[i+1,j];
+                    a_max_index_2=j;
+                }
+            }
+            int temp=B[i,a_max_index_1];
+            B[i,a_max_index_1]=B[i+1,a_max_index_2];
+            B[i+1,a_max_index_2]=temp;
+        }
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                Console.Write(B[i, j] + "\t");
+            }
+            Console.WriteLine();
+        }
+
+        return B;
+    }
+    public int[,] Task_2_9(int[,] A)
+    {
+        int rows = A.GetLength(0);
+        int cols = A.GetLength(1);
+        int temp;
+
+        if (rows != 6 || cols != 7) 
+        return null;
+
+
+        for (int i = 0; i < rows; i++) 
+        { 
+            for(int j=0;j<cols/2;j++)
+            {
+                temp=A[i,j];
+                A[i,j]=A[i,cols-j-1];
+                A[i,cols-j-1]=temp;
+            }
+        }
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                Console.Write(A[i, j] + "\t");
+            }
+            Console.WriteLine();
+        }
+
+        return A;
+    }
+
     #region Level 3
-    public int[] Task_3_1(double[] array)
+    public int[,] Task_3_1(int[,] matrix)
     {
-        int[] output = null;
+        //
 
-        // code here
-
-        // end
-
-        return output;
+        //
+        return matrix;
     }
-    public double[] Task_3_2(double[] array)
+    public int[,] Task_3_2(int[,] matrix)
     {
-        double maxa=double.NegativeInfinity;
-        for(int i = 0;i<array.Length;i++)
+        int n = matrix.GetLength(0);
+        int r = matrix.GetLength(1);
+        if (n!=r)
+        return null;
+
+        for (int i = 0; i < n; i++)
         {
-            if(array[i]>=maxa)
+            matrix[0, i] = 0;
+            matrix[n - 1, i] = 0;
+            matrix[i, 0] = 0;
+            matrix[i, n - 1] = 0;
+        }
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
             {
-                maxa=array[i];
+                Console.Write(matrix[i, j] + "\t");
             }
+            Console.WriteLine();
         }
-        int count=0;
-        for(int i = 0;i<array.Length;i++)
+
+        return matrix;
+    }
+    public int[] Task_3_3(int[,] matrix)
+    {
+        int[] answer = default(int[]);
+        // code here
+
+        // end
+
+        return answer;
+    }
+    public int[,] Task_3_4(int[,] matrix)
+    {
+        int rows = matrix.GetLength(0);
+        int cols = matrix.GetLength(1);
+
+        if (rows == 0 || rows!=cols) 
+        return null;
+
+        for(int i=rows/2;i<rows;i++)
         {
-            if(array[i]==maxa)
+            for (int j=0; j<rows;j++)
             {
-                array[i]=maxa+1+count;
-                count++;
-            }
-        }
-
-        return array;
-    }
-    public double[] Task_3_3(double[] array)
-    {
-        // code here
-
-        // end
-
-        return array;
-    }
-    public double[] Task_3_4(double[] array)
-    {
-        // code here
-
-        // end
-
-        return array;
-    }
-    public double[] Task_3_5(double[] array)
-    {
-        double[] array_new = null; 
-        if ((array.Length / 2) * 2 == array.Length)  
-        {  
-            array_new = new double[array.Length / 2]; 
-        } 
-        else  
-        {  
-            array_new = new double[array.Length / 2 + 1];  
-        } 
-        for (int i = 0; i < array.Length; i += 2)  
-        {  
-            array_new[i / 2] = array[i]; 
-        } 
-
-        for (int i = 0; i < array_new.Length - 1; i++) 
-        { 
-            double amin = array_new[i]; 
-            int imin = i; 
-            for (int j = i + 1; j < array_new.Length ; j++) 
-            { 
-                if (array_new[j] < amin) 
-                { 
-                    amin = array_new[j]; 
-                    imin = j; 
-                } 
-            } 
-            array_new[imin] = array_new[i]; 
-            array_new[i] = amin; 
-        } 
-        for (int i = 0; i < array_new.Length; i++)  
-        {  
-            array[i*2] = array_new[i]; 
-        }
-
-        return array;
-    }
-    public int Task_3_6(double[] array)
-    {
-        int count = 0;
-
-        // code here
-
-        // end
-
-        return count;
-    }
-    public double[] Task_3_7(double[] array)
-    {
-        // code here
-
-        // end
-
-        return array;
-    }
-    public double[] Task_3_8(double[] array)
-    {
-        int count=0;
-        foreach(double a in array)
-        {
-            if (a<0) count++;
-        }
-        double[] array_new = new double[count];
-
-        int k=0;
-        for (int i = 0; i < array.Length; i++)  
-        {
-            if (array[i]<0)
-            {
-                array_new[k]=array[i];
-                k++;
-            }
-        } 
-
-        for (int i = 0; i < array_new.Length - 1; i++) 
-        { 
-            double amax = array_new[i]; 
-            int imax = i; 
-            for (int j = i + 1; j < array_new.Length ; j++) 
-            { 
-                if (array_new[j] > amax) 
-                { 
-                    amax = array_new[j]; 
-                    imax = j; 
-                } 
-            } 
-            array_new[imax] = array_new[i]; 
-            array_new[i] = amax; 
-        } 
-        int h=0;
-        for (int i = 0; i < array.Length; i++)  
-        {  
-            if (array[i]<0)
-            {
-                array[i]=array_new[h];
-                h++;
-            }
-        }
-
-        return array;
-    }
-    public int Task_3_9(double[] array)
-    {
-        int count = 0;
-
-        // code here
-
-        // end
-
-        return count;
-    }
-    public double[] Task_3_10(double[] array)
-    {
-        // code here
-
-        // end
-
-        return array;
-    }
-    public (double[], double[], double, double) Task_3_11(double a, double b, int n)
-    {
-        double[] X = null, Y = null;
-        double globalMax = 0, globalMin = 0;
-        X = new double[n];
-        Y = new double[n];
-
-        double m = (b-a)/(n-1);
-        int j=0;
-
-        for (double i=a;i<=b;i+=m)
-        {
-            X[j]=i;
-            Y[j]=Math.Cos(i) + i * Math.Sin(i);
-            j++;
-        }
-        globalMax = Y[0]; 
-        globalMin = Y[0];
-
-        for (int i=0;i<n-2;i++)
-        {
-            if (Y[i]<Y[i+1] && Y[i+1]>Y[i+2])
-            {
-                if (Y[i+1]>globalMax)
+                if (i>=j)
                 {
-                    globalMax=Y[i+1];
-                }
-            }
-            if (Y[i]>Y[i+1] && Y[i+1]<Y[i+2])
-            {
-                if (Y[i+1]>globalMin)
-                {
-                    globalMin=Y[i+1];
+                matrix[i,j]= 1;
                 }
             }
         }
-        if (Y[n - 1] > globalMax) 
-        { 
-            globalMax = Y[n - 1]; 
-        }
-        if (Y[n - 1] < globalMin) 
-        { 
-            globalMin = Y[n - 1]; 
-        }
 
-        return (X, Y, globalMax,globalMin);
-    }
-    public double[] Task_3_12(double[] array)
-    {
-        // code here
 
-        // end
-
-        return array;
-    }
-    public double[] Task_3_13(double[] array)
-    {
-        // code here
-
-        // end
-
-        return array;
-    }
-    public double[] Task_3_14(double[] array)
-    {
-        double[] normalizedArray = null;
-
-        double maxa=double.MinValue;
-        double mina=double.MaxValue;
-        foreach(double a in array)
+        for (int i = 0; i < rows; i++)
         {
-            if(a>maxa)
+            for (int j = 0; j < rows; j++)
             {
-                maxa=a;
+                Console.Write(matrix[i, j] + "\t");
             }
-            if(a<mina)
+            Console.WriteLine();
+        }
+
+        return matrix;
+    }
+    public int[,] Task_3_5(int[,] matrix, int k)
+    {
+        // code here
+
+        // end
+
+        return matrix;
+    }
+    public (int[], int[]) Task_3_6(int[,] matrix)
+    {
+        int[] upper = default(int[]);
+        int[] lower = default(int[]);
+
+        int rows = matrix.GetLength(0);
+        int cols = matrix.GetLength(1);
+
+        if (rows == 0 || rows!=cols) 
+        return (null,null);
+
+        upper = new int[(rows*cols-rows)/2+rows];
+        lower = new int[(rows*cols-rows)/2];
+
+        int count_l=0;
+        int count_u=0;
+
+        for(int i=0;i<rows;i++)
+        {
+            for (int j=0; j<rows;j++)
             {
-                mina=a;
+                if (i>j)
+                {
+                lower[count_l]= matrix[i,j];
+                count_l++;
+                }
+                if (i<=j)
+                {
+                upper[count_u]= matrix[i,j];
+                count_u++;
+                }
+            }
+        }
+
+        for (int i = 0; i < count_u; i++)
+        {
+            Console.Write(upper[i] + "\t");
+        }
+        System.Console.WriteLine();
+        for (int i = 0; i < count_l; i++)
+        {
+            Console.Write(lower[i] + "\t");
+        }
+
+        return (upper, lower);
+    }
+    public int[] Task_3_7(int[] A, int[] B, int n)
+    {
+        int[] answer = default(int[]);
+
+        // code here
+
+        // end
+
+        return answer;
+    }
+    public int[,] Task_3_8(int[,] matrix)
+    {
+        int rows = matrix.GetLength(0);
+        int cols = matrix.GetLength(1);
+
+        if (rows != 7 || cols!=5) 
+        return null;
+
+        int[] positiveCounts = new int[rows];
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                if (matrix[i, j] > 0)
+                {
+                    positiveCounts[i]++;
+                }
+            }
+        }
+
+        for (int i = 0; i < rows - 1; i++)
+        {
+            for (int j = 0; j < rows - 1 - i; j++)
+            {
+                if (positiveCounts[j] < positiveCounts[j + 1])
+                {
+                    for (int k = 0; k < cols; k++)
+                    {
+                        int temp = matrix[j, k];
+                        matrix[j, k] = matrix[j + 1, k];
+                        matrix[j + 1, k] = temp;
+                    }
+                    int tempCount = positiveCounts[j];
+                    positiveCounts[j] = positiveCounts[j + 1];
+                    positiveCounts[j + 1] = tempCount;
+                }
+            }
+        }
+
+        return matrix;
+    }
+    public int[,] Task_3_9(int[,] matrix)
+    {
+        // code here
+
+        // end
+
+        return matrix;
+    }
+    public int[,] Task_3_10(int[,] matrix)
+    {
+        int rows = matrix.GetLength(0);
+        int cols = matrix.GetLength(1);
+
+        if (rows == 0 || cols==0) 
+        return null;
+
+        for (int i = 0; i < rows; i++)
+        {
+            if (i%2 == 0)
+            {
+                for (int j=0; j<cols;j++)
+                {
+                    for (int k=0;k<cols-j-1;k++)
+                    {
+                        if (matrix[i,k]<matrix[i,k+1])
+                        {
+                            int temp=matrix[i,k];
+                            matrix[i,k]=matrix[i,k+1];
+                            matrix[i,k+1]=temp;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int j=0; j<cols;j++)
+                {
+                    for (int k=0;k<cols-j-1;k++)
+                    {
+                        if (matrix[i,k]>matrix[i,k+1])
+                        {
+                            int temp=matrix[i,k];
+                            matrix[i,k]=matrix[i,k+1];
+                            matrix[i,k+1]=temp;
+                        }
+                    }
+                }
             }
         }
         
-        normalizedArray= new double[array.Length];
-
-        for(int i=0;i<normalizedArray.Length;i++)
+        for (int i = 0; i < rows; i++)
         {
-            normalizedArray[i]=(2.0 * (array[i] - mina) / (maxa - mina)) - 1.0;
+            for (int j = 0; j < rows; j++)
+            {
+                Console.Write(matrix[i, j] + "\t");
+            }
+            Console.WriteLine();
         }
 
-        return normalizedArray;
+        return matrix;
+    }
+    public int[,] Task_3_11(int[,] matrix)
+    {
+        int rows = matrix.GetLength(0);
+        int cols = matrix.GetLength(1);
+
+        if (rows == 0 || cols==0) 
+        return null;
+
+        int nonZero = 0;
+
+        for (int i = 0; i < rows; i++)
+        {
+            bool hasZero = false;
+            for (int j = 0; j < cols; j++)
+            {
+                if (matrix[i, j] == 0)
+                {
+                    hasZero = true;
+                    break;
+                }
+            }
+            if (!hasZero)
+            {
+                nonZero++;
+            }
+        }
+
+        int[,] newMatrix = new int[nonZero, cols];
+        int newRowIndex = 0;
+
+        for (int i = 0; i < rows; i++)
+        {
+            bool hasZero = false;
+
+            for (int j = 0; j < cols; j++)
+            {
+                if (matrix[i, j] == 0)
+                {
+                    hasZero = true;
+                    break;
+                }
+            }
+
+            if (!hasZero)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    newMatrix[newRowIndex, j] = matrix[i, j];
+                }
+                newRowIndex++;
+            }
+        }
+
+
+        return newMatrix;
     }
     #endregion
 }

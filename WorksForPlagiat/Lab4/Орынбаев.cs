@@ -16,6 +16,8 @@ public class Program
 
     }
     #region Level 1
+    public int Task_1_1(int[,] A) { }
+    public int Task_1_2(int[,] A) { }
     public int Task_1_3(int[,] A)
     {
         int answer = 0;
@@ -43,6 +45,8 @@ public class Program
 
         return answer;
     }
+    public int Task_1_4(int[,] A) { }
+    public int Task_1_5(int[,] A) { }
     public int[] Task_1_6(int[,] A)
     {
         int[] answer = default(int[]);
@@ -81,6 +85,8 @@ public class Program
 
         return answer;
     }
+    public int Task_1_7(int[,] A) { }
+    public int Task_1_8(int[,] A) { }
     public int[,] Task_1_9(int[,] A)
     {
         if (A.GetLength(0) == 5 && A.GetLength(1) == 7)
@@ -119,6 +125,8 @@ public class Program
         else { A = null; }
         return A;
     }
+    public int Task_1_10(int[,] A) { }
+    public int Task_1_11(int[,] A) { }
     public int[,] Task_1_12(int[,] A)
     {
         // code here
@@ -170,6 +178,8 @@ public class Program
 
         return A;
     }
+    public int Task_1_12(int[,] A) { }
+    public int Task_1_13(int[,] A) { }
     public int[] Task_1_14(int[,] A)
     {
         int[] answer = default(int[]);
@@ -216,6 +226,8 @@ public class Program
 
         return A;
     }
+    public int Task_1_16(int[,] A) { }
+    public int Task_1_17(int[,] A) { }
     public int[,] Task_1_18(int[,] D, int n, int m)
     {
         // code here
@@ -260,6 +272,8 @@ public class Program
 
         return D;
     }
+    public int Task_1_19(int[,] A) { }
+    public int Task_1_20(int[,] A) { }
     public int[,] Task_1_21(int[,] H)
     {
         // code here
@@ -303,6 +317,8 @@ public class Program
 
         return H;
     }
+    public int Task_1_22(int[,] A) { }
+    public int Task_1_23(int[,] A) { }
     public double[,] Task_1_24(double[,] Y)
     {
         // code here
@@ -361,6 +377,8 @@ public class Program
 
         return Y;
     }
+    public int Task_1_25(int[,] A) { }
+    public int Task_1_26(int[,] A) { }
     public int[,] Task_1_27(int[,] B)
     {
         // code here
@@ -400,6 +418,8 @@ public class Program
 
         return B;
     }
+    public int Task_1_28(int[,] A) { }
+    public int Task_1_29(int[,] A) { }
     public int[,] Task_1_30(int[,] B)
     {
         // code here
@@ -450,6 +470,8 @@ public class Program
 
         return B;
     }
+    public int Task_1_31(int[,] A) { }
+    public int Task_1_32(int[,] A) { }
     public int[] Task_1_33(int[,] A)
     {
         int[] answer = default(int[]);
@@ -934,6 +956,7 @@ public class Program
     }
     #endregion
     #region Level 3
+    public int[,] Task_3_1(int[,] matrix) { }
     public int[,] Task_3_2(int[,] matrix)
     {
         // code here
@@ -971,6 +994,7 @@ public class Program
 
         return matrix;
     }
+    public int[,] Task_3_3(int[,] matrix) { }
     public int[,] Task_3_4(int[,] matrix)
     {
         // code here
@@ -1008,6 +1032,7 @@ public class Program
 
         return matrix;
     }
+    public int[,] Task_3_5(int[,] matrix) { }
     public (int[], int[]) Task_3_6(int[,] matrix)
     {
         int[] upper = default(int[]);
@@ -1057,6 +1082,7 @@ public class Program
 
         return (upper, lower);
     }
+    public int[,] Task_3_7(int[,] matrix) { }
     public int[,] Task_3_8(int[,] matrix)
     {
         // code here
@@ -1117,6 +1143,7 @@ public class Program
 
         return matrix;
     }
+    public int[,] Task_3_9(int[,] matrix) { }
     public int[,] Task_3_10(int[,] matrix)
     {
         // code here
