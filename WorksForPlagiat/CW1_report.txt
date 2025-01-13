@@ -1,0 +1,9 @@
+2
+C:\Users\Markosias\source\repos\BIVT24_Antiplagiat\WorksForPlagiat\CW1\12варТаровикАнастасия9группа.cs
+C:\Users\Markosias\source\repos\BIVT24_Antiplagiat\WorksForPlagiat\CW1\БИВТ-24-9_Щепетильников_Арсений_12.cs
+1
+        public double Task_1(int n)            double s = 0;            double a = 1;            int b = 1;                s += a / b;                b += 2;
+C:\Users\Markosias\source\repos\BIVT24_Antiplagiat\WorksForPlagiat\CW1\БИВТ-24-11_дмитриева_анастасия.cs
+C:\Users\Markosias\source\repos\BIVT24_Antiplagiat\WorksForPlagiat\CW1\БИВТ-24-16_Сырцов_Игорь_8_Вариант.cs
+1
+        public double Task_1(int n)            double ch = 1;            double zn = 2;            double s = 0;            for (int i = 0; i < n; i++)                ch += 2;                zn += 3;

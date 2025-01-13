@@ -1,0 +1,5 @@
+1
+C:\Users\Markosias\source\repos\BIVT24_Antiplagiat\WorksForPlagiat\CW2\БИВТ-24-15_Гукасян_Валерий_Александрович_Вариант1.cs
+C:\Users\Markosias\source\repos\BIVT24_Antiplagiat\WorksForPlagiat\CW2\БИВТ-24-15_Лоскутова_Валерия_В1.cs
+1
+            // Task_1:            // input:  -6, -2, -7, 0, -3, 1, 2, 3, 4, -1, -2, -3, -4, 4, 1, 0            // output:  6,  6,  6, 0,  6, 1, 2, 3, 4,  6,  6,  6,  6, 4, 1, 0            program.Task_1(array);            Print(array);
